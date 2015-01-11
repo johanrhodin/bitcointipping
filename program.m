@@ -1,11 +1,13 @@
+(* ::Package:: *)
+
 (*Constants*)
-myadr = (*Example: "1HxhvPBGuUTiu9n1sV78epGrcGTPujdDB3";*)
+myadr = " "; (*Example: "1HxhvPBGuUTiu9n1sV78epGrcGTPujdDB3";*)
 tmpfile = FileNameJoin[{$TemporaryDirectory, "transactions.json"}];
-chainapikey= ""; (*Insert API key from Chain.com*)
-str = "curl -o " <> tmpfile <> 
-   " 'https://api.chain.com/v2/bitcoin/addresses/"<>myadr<>"/transactions?api-key-id=\
-"<>chainapikey>"?&limit=10'";
-oldhashes="3c7cc526a1f808eb5349b07a49828ad8c1d7d9fe76a8130e6a5885ee9cc9c6b7";
+chainapikey = " "; (*Insert API key from Chain.com*)
+str = "curl -o " <> tmpfile <> "'https://api.chain.com/v2/bitcoin/addresses/"<>myadr<>"/transactions?api-key-id="<>chainapikey<>"?&limit=10'";
+sndfile = "/home/pi/coins-drop-1.wav";
+
+oldhashes={"3c7cc526a1f808eb5349b07a49828ad8c1d7d9fe76a8130e6a5885ee9cc9c6b7"};
 
 (*Run loop*)
 Do[Quiet[Run[str]];
@@ -18,12 +20,12 @@ Do[Quiet[Run[str]];
    Cases[outputs, {__, Verbatim["addresses" -> {myadr}], __, 
       HoldPattern["value" -> y_], __} :> y, Infinity];
   (*Play coin sound*)
-  Quiet@Run["aplay /home/pi/coins-drop-1.wav"];
+  Quiet@Run["aplay"<> sndfile];
   If[nrNewTransactions == 1, 
-   Print[ToString[newtransactions] <> " satoshis tippped at " <>
+   Print[ToString[First[newtransactions]] <> " satoshis tippped at " <>
       DateString[]], 
    Print[StringJoin[Riffle[ToString /@ newtransactions, " and "]] <> 
-     " satoshis tipped at" <> DateString[]]];
+     " satoshis tipped at " <> DateString[]]];
   ];
  (*Set the old hashes to include new hashes*)
  oldhashes = hashes;
