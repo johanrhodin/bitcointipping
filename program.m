@@ -22,7 +22,7 @@ Do[Quiet[Run[str]];
    Cases[outputs, {__, Verbatim["addresses" -> {myadr}], __, 
       HoldPattern["value" -> y_], __} :> y, Infinity];
   (*Play coin sound*)
-  Quiet@Run["aplay"<> sndfile];
+  Quiet@Run["aplay "<> sndfile];
   If[nrNewTransactions == 1, 
    Print[ToString[First[newtransactions]] <> " satoshis tippped at " <>
       DateString[]], 
