@@ -1,9 +1,11 @@
 (* ::Package:: *)
 
 (*Constants*)
-myadr = " "; (*Example: "1HxhvPBGuUTiu9n1sV78epGrcGTPujdDB3";*)
+(*myadr = " "; *)(*Example: "1HxhvPBGuUTiu9n1sV78epGrcGTPujdDB3";*)
+(*chainapikey = " ";*) (*Insert API key from Chain.com*)
+(*Or store them in a credentials file:*)
+Get["/home/pi/bitcointipping/credentials.m"];
 tmpfile = FileNameJoin[{$TemporaryDirectory, "transactions.json"}];
-chainapikey = " "; (*Insert API key from Chain.com*)
 str = "curl -o " <> tmpfile <> "'https://api.chain.com/v2/bitcoin/addresses/"<>myadr<>"/transactions?api-key-id="<>chainapikey<>"?&limit=10'";
 sndfile = "/home/pi/coins-drop-1.wav";
 
