@@ -1,1 +1,4 @@
+#Don't track credentials.
 credentials.m
+#And not assets:
+assets/**

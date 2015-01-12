@@ -7,7 +7,7 @@
 Get["/home/pi/bitcointipping/credentials.m"];
 tmpfile = FileNameJoin[{$TemporaryDirectory, "transactions.json"}];
 str = "curl -o " <> tmpfile <> "'https://api.chain.com/v2/bitcoin/addresses/"<>myadr<>"/transactions?api-key-id="<>chainapikey<>"?&limit=10'";
-sndfile = "/home/pi/coins-drop-1.wav";
+sndfile = "/home/pi/bitcointipping/assets/coins-drop-1.wav";
 
 oldhashes={"3c7cc526a1f808eb5349b07a49828ad8c1d7d9fe76a8130e6a5885ee9cc9c6b7"};
 
