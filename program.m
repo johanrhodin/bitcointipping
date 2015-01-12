@@ -13,7 +13,7 @@ oldhashes={};
 pattern=If[$OperatingSystem==="MacOSX",
 	{__,Verbatim["addresses"->{myadr}],__,HoldPattern["value"->y_],__}:> y,
 	(*Raspberry Pi / UNIX*)
-	{__,HoldPattern["value" -> y_],__, Verbatim["addresses" -> {myadr}], __}];
+	{__,HoldPattern["value" -> y_],__, Verbatim["addresses" -> {myadr}], __}:> y];
 
 (*Run loop*)
 Do[Quiet[Run[str]];
