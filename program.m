@@ -3,12 +3,11 @@
 (*Constants*)
 (*myadr = " "; *)(*Example: "1HxhvPBGuUTiu9n1sV78epGrcGTPujdDB3";*)
 (*chainapikey = " ";*) (*Insert API key from Chain.com*)
-(*Or store them in a credentials file:*)
-Get["/home/pi/bitcointipping/credentials.m"];
-tmpfile = FileNameJoin[{$TemporaryDirectory, "transactions.json"}];
-str = "curl -o " <> tmpfile <> " 'https://api.chain.com/v2/bitcoin/addresses/"<>myadr<>"/transactions?api-key-id="<>chainapikey<>"&limit=10'";
-sndfile = "/home/pi/bitcointipping/assets/coins-drop-1.wav";
-(*Let all transactions be new:*)
+(*Or store them in a credentials file*)
+Get["~/bitcointipping/credentials.m"];
+str = "https://api.chain.com/v2/bitcoin/addresses/"<>myadr<>"/transactions?api-key-id="<>chainapikey<>"&limit=10";
+sndfile = "~/bitcointipping/assets/coins-drop-1.wav";
+(*Let all previous transactions be new*)
 oldhashes={};
 pattern=If[$OperatingSystem==="MacOSX",
 	{__,Verbatim["addresses"->{myadr}],__,HoldPattern["value"->y_],__}:> y,
@@ -16,8 +15,7 @@ pattern=If[$OperatingSystem==="MacOSX",
 	{__,HoldPattern["value" -> y_],__, Verbatim["addresses" -> {myadr}], __}:> y];
 
 (*Run loop*)
-Do[Quiet[Run[str]];
- data = Quiet[Import[tmpfile]];
+Do[data = Quiet[ImportString[URLFetch[str],"JSON"]];
  hashes = "hash" /. data;
  nrNewTransactions = Length[Complement[hashes, oldhashes]];
  If[nrNewTransactions > 0, 
