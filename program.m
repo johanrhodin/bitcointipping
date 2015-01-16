@@ -15,7 +15,8 @@ pattern=If[$OperatingSystem==="MacOSX",
 	{__,HoldPattern["value" -> y_],__, Verbatim["addresses" -> {myadr}], __}:> y];
 
 (*Run loop*)
-Do[data = Quiet[ImportString[URLFetch[str],"JSON"]];
+RunScheduledTask[
+ data = Quiet[ImportString[URLFetch[str],"JSON"]];
  hashes = "hash" /. data;
  nrNewTransactions = Length[Complement[hashes, oldhashes]];
  If[nrNewTransactions > 0, 
@@ -29,9 +30,8 @@ Do[data = Quiet[ImportString[URLFetch[str],"JSON"]];
       DateString[]], 
    Print[StringJoin[Riffle[ToString /@ newtransactions, " and "]] <> 
      " satoshis tipped at " <> DateString[]]];
-  ];
+ ];
  (*Set the old hashes to include new hashes*)
  oldhashes = hashes;
- Pause[60],
- {600}
+ ,60
  ]
