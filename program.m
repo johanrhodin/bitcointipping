@@ -37,11 +37,11 @@ RunScheduledTask[
 	lcdClear[];
   If[nrNewTransactions == 1,
 	onetransactionstr=ToString[First[newtransactions]] <> " satoshis tippped at " <>
-      DateString[];
+      DateString[{"Hour",":","Minute"},TimeZone->$TimeZone];
 	Print[onetransactionstr];
 	lcdPuts[onetransactionstr],
 	manytransstr=StringJoin[Riffle[ToString /@ newtransactions, " and "]] <> 
-     " satoshis tipped at " <> DateString[];
+     " satoshis tipped at " <> DateString[{"Hour",":","Minute"},TimeZone->$TimeZone];
 	Print[manytransstr];
 	lcdPuts[manytransstr];
 	]
@@ -49,4 +49,4 @@ RunScheduledTask[
  (*Set the old hashes to include new hashes*)
  oldhashes = hashes;
  ,60
- ]
+ ];
