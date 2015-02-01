@@ -34,11 +34,17 @@ RunScheduledTask[
    Cases[outputs, pattern, Infinity];
   (*Play coin sound*)
   Quiet@Run["aplay "<> sndfile];
-  If[nrNewTransactions == 1, 
-   Print[ToString[First[newtransactions]] <> " satoshis tippped at " <>
-      DateString[]];, 
-   Print[StringJoin[Riffle[ToString /@ newtransactions, " and "]] <> 
-     " satoshis tipped at " <> DateString[]]];
+	lcdClear[];
+  If[nrNewTransactions == 1,
+	onetransactionstr=ToString[First[newtransactions]] <> " satoshis tippped at " <>
+      DateString[];
+	Print[onetransactionstr];
+	lcdPuts[onetransactionstr],
+	manytransstr=StringJoin[Riffle[ToString /@ newtransactions, " and "]] <> 
+     " satoshis tipped at " <> DateString[];
+	Print[manytransstr];
+	lcdPuts[manytransstr];
+	]
  ];
  (*Set the old hashes to include new hashes*)
  oldhashes = hashes;
