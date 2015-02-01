@@ -5,6 +5,15 @@
 (*chainapikey = " ";*) (*Insert API key from Chain.com*)
 (*Or store them in a credentials file*)
 Get["~/bitcointipping/credentials.m"];
+
+(*Load the lcdlink*)
+<<"!gpio load i2c"
+SetDirectory["~/rpi-lcdlink"]
+lcdlink = Install["lcdlink"];
+lcdClear[];
+lcdPuts["Bitcoin tipping starting..."];
+SetDirectory["~/bitcointipping"];
+
 str = "https://api.chain.com/v2/bitcoin/addresses/"<>myadr<>"/transactions?api-key-id="<>chainapikey<>"&limit=10";
 sndfile = "~/bitcointipping/assets/coins-drop-1.wav";
 (*Let all previous transactions be new*)
@@ -27,7 +36,7 @@ RunScheduledTask[
   Quiet@Run["aplay "<> sndfile];
   If[nrNewTransactions == 1, 
    Print[ToString[First[newtransactions]] <> " satoshis tippped at " <>
-      DateString[]], 
+      DateString[]];, 
    Print[StringJoin[Riffle[ToString /@ newtransactions, " and "]] <> 
      " satoshis tipped at " <> DateString[]]];
  ];
